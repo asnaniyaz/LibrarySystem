@@ -1,0 +1,55 @@
+USE [LibrarySystem]
+GO
+/****** Object:  StoredProcedure [dbo].[GetData]    Script Date: 07/06/2023 7:44:40 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[GetData]
+
+	@CatID nvarchar(50) ,
+	@SubCatID nvarchar(10)
+
+AS
+
+
+BEGIN
+if(@CatID = '7')
+begin
+	if(@SubCatID ='All')
+	begin
+		select distinct AuthorName, Title,BirthDate, Country, convert (nvarchar ,PublishDate,103) PublishDate, Description, Availability from books a
+		inner join Authors b on b.AuthorID= a.AuthorID
+
+	end
+
+	else
+
+	begin
+		select distinct AuthorName, Title,BirthDate, Country, convert (nvarchar ,PublishDate,103) PublishDate, Description, Availability from books a
+		inner join Authors b on b.AuthorID= a.AuthorID
+		where SubcategoryID = @SubCatID
+	end
+end
+
+else
+begin
+	if(@SubCatID ='All')
+	begin
+		select distinct AuthorName, Title,BirthDate, Country, convert (nvarchar ,PublishDate,103) PublishDate, Description, Availability from books a
+		inner join Authors b on b.AuthorID= a.AuthorID
+		where CategoryID= @CatID
+
+	end
+
+	else
+
+	begin
+		select distinct AuthorName, Title,BirthDate, Country, convert (nvarchar ,PublishDate,103) PublishDate, Description, Availability from books a
+		inner join Authors b on b.AuthorID= a.AuthorID
+		where CategoryID= @CatID and SubcategoryID = @SubCatID
+	end
+
+END
+end
