@@ -18,7 +18,7 @@
                     
                     questions.forEach(question => {
                         var questionLink = document.createElement("a");
-                        questionLink.href = "quest.aspx?id=" + question.question_id;
+                        questionLink.href = "QuestionDetails.aspx?id=" + question.question_id;
                         questionLink.textContent = question.title;
                         
                         var listItem = document.createElement("li");
@@ -51,7 +51,7 @@
         <asp:TemplateField>
             <ItemTemplate>
                 <asp:HyperLink ID="questionLink" runat="server" Text='<%# Eval("title") %>'
-                    NavigateUrl='<%# "quest.aspx?id=" + Eval("question_id") %>'></asp:HyperLink>
+                    NavigateUrl='<%# "QuestionDetails.aspx?id=" + Eval("question_id") %>'></asp:HyperLink>
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>
