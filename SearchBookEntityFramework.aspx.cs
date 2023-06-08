@@ -27,7 +27,7 @@ namespace Library
         {
             using (var context = new LibraryDBContext())
             {
-                var query = context.Books.Include("Author").AsQueryable();
+                var query = context.Books.Include(b => b.Author).AsQueryable();
 
                 if (dlSearch.SelectedValue == "7")
                 {
@@ -53,7 +53,18 @@ namespace Library
 
                 var results = query.ToList();
 
-                gvSearch.DataSource = results;
+                 var searchResults = results.Select(b => new
+                {
+                    b.Author.AuthorName,
+                    b.Title,
+                    b.Author.BirthDate,
+                    b.Author.Country,
+                    b.PublishDate,
+                    b.Description,
+                    b.Availability
+                }).ToList();
+
+                gvSearch.DataSource = searchResults;
                 gvSearch.DataBind();
             }
         }
@@ -96,6 +107,8 @@ namespace Library
         {
             public int AuthorId { get; set; }
             public string AuthorName { get; set; }
+            public string Country { get; set; }
+            public DateTime BirthDate { get; set; }
         }
 
         public class Book
@@ -104,8 +117,11 @@ namespace Library
             public string Title { get; set; }
             public int AuthorId { get; set; }
             public Author Author { get; set; }
-            public int CategoryID { get; set; } // Add CategoryID property
+            public int CategoryID { get; set; }
             public int SubCategoryId { get; set; }
+            public DateTime PublishDate { get; set; }
+            public string Description { get; set; }
+            public string Availability { get; set; }
         }
 
         public class Category
@@ -120,18 +136,17 @@ namespace Library
             public string SubCategoryName { get; set; }
             public int CategoryID { get; set; }
         }
+
         public class LibraryDBContext : DbContext
         {
             public LibraryDBContext() : base("name=DbConn")
             {
             }
+
             public DbSet<Book> Books { get; set; }
             public DbSet<Author> Authors { get; set; }
             public DbSet<Category> Categories { get; set; }
             public DbSet<SubCategory> SubCategories { get; set; }
-
-
-
         }
     }
 }
