@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -101,7 +101,7 @@ namespace Library
         public class Book
         {
             public int BookId { get; set; }
-            public string BookName { get; set; }
+            public string Title { get; set; }
             public int AuthorId { get; set; }
             public Author Author { get; set; }
             public int CategoryID { get; set; } // Add CategoryID property
@@ -120,7 +120,6 @@ namespace Library
             public string SubCategoryName { get; set; }
             public int CategoryID { get; set; }
         }
-
         public class LibraryDBContext : DbContext
         {
             public LibraryDBContext() : base("name=DbConn")
@@ -130,6 +129,9 @@ namespace Library
             public DbSet<Author> Authors { get; set; }
             public DbSet<Category> Categories { get; set; }
             public DbSet<SubCategory> SubCategories { get; set; }
+
+
+
         }
     }
 }
